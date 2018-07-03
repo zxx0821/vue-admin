@@ -1,8 +1,8 @@
 {
-  "name": "vue-admin",
+  "name": "admin",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "zxx0821 <1358735259@qq.com>",
+  "author": "",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -10,11 +10,20 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "echarts": "^4.1.0",
+    "element-ui": "^2.4.0",
+    "font-awesome": "^4.7.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-i18n": "^8.0.0",
+    "vue-router": "^3.0.1",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
+    "axios-mock-adapter": "^1.15.0",
     "babel-core": "^6.22.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
     "babel-loader": "^7.1.1",
@@ -26,10 +35,12 @@
     "chalk": "^2.0.1",
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.0",
+    "d3": "^5.5.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
+    "mockjs": "^1.0.1-beta3",
     "node-notifier": "^5.1.2",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
