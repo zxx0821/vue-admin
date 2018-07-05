@@ -18,6 +18,7 @@ export const getEchartsData = params => { return axios.get(`${base}/echarts/lesm
 export const getforceGraph = params => { return axios.get(`${base}/echarts/forceGraph`, {params:params});};
 export const getforceGraphall = params => { return axios.get(`${base}/echarts/forceGraphall`, {params:params});};
 export const getvisiual = params => { return axios.get(`${base}/echarts/visiual`, {params:params});};
+export const radialTree = params => { return axios.get(`${base}/echarts/radialTree`, {params:params});};
 
 export const d3forceGraph = params => { return axios.get(`${base}/d3/forceGraph`, {params:params});};
 

@@ -2,13 +2,14 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import {LoginUsers, Users} from './data/user';
 import {json} from "./echarts/data/echartlesmiserable";
-import {forceGraph,schoolData} from "./echarts/data/forceGraph";
+import {forceGraph,schoolData,radialTree} from "./echarts/data/forceGraph";
 import {dataMap} from "./echarts/data/dataMap"
 import {d3relation} from "./D3/relation";
 
 let data_json = json;
 let force_Graph = forceGraph;
 let school_Data = schoolData;
+let radial_Tree = radialTree;
 let data_Map = dataMap;
 let d3_relation = d3relation;
 let _Users = Users;
@@ -203,6 +204,18 @@ export default {
     /*力布局*/
     mock.onGet('/echarts/visiual').reply(config => {
       let dataEcharts = data_Map;
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            dataEchart: dataEcharts
+          }]);
+        }, 1000);
+      });
+    })
+
+    /*力布局*/
+    mock.onGet('/echarts/radialTree').reply(config => {
+      let dataEcharts = radial_Tree;
       return new Promise((resolve, reject) => {
         setTimeout(() => {
           resolve([200, {

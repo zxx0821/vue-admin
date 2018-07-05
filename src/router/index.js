@@ -135,6 +135,12 @@ let router = new Router({
           component: resolve => require(['../views/echarts/closetoexpand'],resolve),
           name:'closetoexpand',
           meta: {requireAuth: true}
+        },
+        {
+          path: '/radialTree',
+          component: resolve => require(['../views/echarts/radialTree'],resolve),
+          name:'radialTree',
+          meta: {requireAuth: true}
         }
       ]
     },

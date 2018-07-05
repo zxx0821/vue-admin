@@ -1,6 +1,6 @@
 <template>
   <div class="chart-container">
-    <forcetocircles height="150%" width="100%"></forcetocircles>
+    <forcetocircles height="100%" width="100%" class="force"></forcetocircles>
   </div>
 </template>
 
@@ -27,6 +27,6 @@
     position: relative;
     padding:20px;
     width: 100%;
-    height:100vh;
+    height:95vh;
   }
 </style>

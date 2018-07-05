@@ -1,8 +1,9 @@
 <template>
   <div id="solutionNum">
     <button @click="toChange">切换</button>
-    <div :class="className" :id="id" :style="{height:height,width:width}"></div>
-
+    <transition name="bounce">
+      <div :class="className" :id="id" :style="{height:height,width:width}" v-if="show"></div>
+    </transition>
   </div>
 </template>
 
@@ -31,7 +32,7 @@
     data(){
       return {
         chart: null,
-        show:false,
+        show:true,
         form: {
           region: ''
         },
@@ -51,16 +52,16 @@
       initChart(){
         let _this = this;
         _this.chart = _this.$echarts.init(document.getElementById(this.id));
+        let dom = document.getElementById(this.id);
+        dom.setAttribute("class", "circle");
+        console.log(dom.className)
         _this.chart.showLoading();
         getvisiual().then((res)=>{
           _this.chart.hideLoading();
-          // console.log(res);
           let graph = res.data.dataEchart;
-          //console.log(graph)
           let links = [];
           let nodes = [{id:0,name:"识别",childrenLen:1,isHasChild:1,parentNodeId:0,status:1,category:-1,nodeType:0}];
           let n =-1;
-          //  console.log(graph);
           let graphData = _this.solutionNum(graph,nodes,links,n);
           graphData.links.sort(function (a,b) {
             return a.source -b.source;
@@ -68,7 +69,6 @@
           graphData.nodes.sort(function (a,b) {
             return a.id -b.id;
           });
-          // console.log(graphData);
           let numItem =[];
           let categories =[];
           graphData.nodes.map(function (item, idex) {
@@ -80,19 +80,18 @@
               name: '类目' + i
             };
           }
-          // console.log(categories)
           let options = {
             tooltip: {
               formatter:function (datas) {}
             },
             legend: [{
-              // selectedMode: 'single',
               data: categories.map(function (a) {
                 return a.name;
               })
             }],
-            animationDuration: 1500,
-            animationEasingUpdate: 'quinticInOut',
+            animation:false,
+           /*animationDuration: 5500,
+           animationEasingUpdate: 'quinticInOut',*/
             "series": [
               {
                 "type": "graph",
@@ -125,6 +124,7 @@
                     "label": {
                       "show": true,
                       "position": "inside",
+                      //fontSize:20,
                       formatter: '{b}'
                     },
                   },
@@ -254,7 +254,6 @@
         }
       },
       findLinks(links, srcLinkName, serieLinks, deep) {
-        // console.log(srcLinkName)
         let _this = this;
         let targetLinks = [];
         serieLinks.filter(link => link.source === srcLinkName).forEach(link => {
@@ -266,11 +265,11 @@
             _this.findLinks(links, targetLinks[i], serieLinks, deep);
           }
         }
-        //.log(targetLinks)
       },
       toChange(){
         let _this = this;
-       //console.log(_this.chart.getOption().series)
+        let dom = document.getElementById(this.id);
+        console.log(dom.className)
         let option = _this.chart.getOption();
        console.log(option.series[0].categories);
        if(_this.onOff){
@@ -285,6 +284,8 @@
              default:return 10;
            }
          };
+         dom.removeAttribute("class")
+         dom.setAttribute("class","force")
          _this.onOff = false;
        }else{
          option.series[0].layout= 'force';
@@ -299,6 +300,8 @@
              default:return 10;
            }
          };
+         dom.removeAttribute("class");
+         dom.setAttribute("class","circle");
          _this.onOff = true;
        }
         _this.chart.setOption(option);
@@ -333,5 +336,63 @@
   }
   .modal .btn{
     width:100%;
+  }
+  .circle{
+    animation-name: myfirst;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: running;
+  }
+  @keyframes myfirst {
+    0%{transform: scale(0.1);}
+    100%{transform: none;}
+  }
+  .bounce-enter-active {
+    animation: bounce-in .5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in .5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .force{
+    animation-name: first;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: running;
+  }
+  @keyframes first {
+    0%{transform: scale(0.1);}
+    100%{transform: none;}
+  }
+  .bounce-enter-active {
+    animation: bounce-in .5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in .5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 </style>
