@@ -19,6 +19,13 @@
     width:100%;
     height: 100%;
   }
+  li{list-style: none}
+  a{
+    text-decoration: none;
+  }
+  img{
+    vertical-align: top;
+  }
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;

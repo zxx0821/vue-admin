@@ -1,7 +1,6 @@
 <template>
   <div id="solutionNum">
     <div :class="className" :id="id" :style="{height:height,width:width}"></div>
-    <button>切换</button>
   </div>
 </template>
 
@@ -56,7 +55,7 @@
           let graph = res.data.dataEchart;
           //console.log(graph)
           let links = [];
-          let nodes = [{id:0,name:"识别",childrenLen:1,isHasChild:1,parentNodeId:0,status:1,category:-1,nodeType:0}];
+          let nodes = [{id:0,name:"识别",childrenLen:1,isHasChild:1,parentNodeId:0,status:1,category:-9999,nodeType:0}];
           let n =-1;
           //  console.log(graph);
           let graphData = _this.solutionNum(graph,nodes,links,n);
@@ -66,7 +65,7 @@
           graphData.nodes.sort(function (a,b) {
             return a.id -b.id;
           });
-          // console.log(graphData);
+          console.log(graphData);
           let numItem =[];
           let categories =[];
           graphData.nodes.map(function (item, idex) {
@@ -78,13 +77,11 @@
               name: '类目' + i
             };
           }
-          // console.log(categories)
           let options = {
             tooltip: {
               formatter:function (datas) {}
             },
             legend: [{
-              // selectedMode: 'single',
               data: categories.map(function (a) {
                 return a.name;
               })
@@ -160,6 +157,10 @@
             ]
           };
           _this.chart.setOption(options);
+          let num =0;
+          let offf = null;
+          _this.toggleShowNodes(options,1);
+          _this.toggleShowNodes(options,2);
           _this.chart.on("click", function (params) {
            console.log(params)
           })
@@ -179,7 +180,7 @@
           nodesobj.isHasChild = data[i].isHasChild;
           nodesobj.parentNodeId = data[i].parentNodeId;
           nodesobj.status = data[i].status;
-          nodesobj.category = n;
+          nodesobj.category = -n;
           if(data[i].isHasChild>0){
             nodesobj.nodeType = 1;
           }else{
@@ -196,75 +197,35 @@
         }
         return {nodes,links};
       },
-      toggleShowNodes(chart, params) {
-        //console.log(params)
-        let _this = this;
-        let open = !!params.data.open,
-          options = chart.getOption(),
-          seriesIndex = params.seriesIndex,
-          srcLinkName = params.data.id,
-          serieLinks = options.series[seriesIndex].links,
-          serieData = options.series[seriesIndex].data,
-          serieDataMap = new Map(),
-          serieLinkArr = [];
-        // 当前根节点是展开的，那么就需要关闭所有的根节点
-        if (open) {
-          // 递归找到所有的link节点的target的值
-          _this.findLinks(serieLinkArr, srcLinkName, serieLinks, true);
-          // console.log(serieLinkArr.length)
-          if (serieLinkArr.length) {
-            serieData.forEach(sd => serieDataMap.set(sd.id, sd));
-            for (let i = 0; i < serieLinkArr.length; i++) {
-              if (serieDataMap.has(serieLinkArr[i])) {
-                let currentData = serieDataMap.get(serieLinkArr[i]);
-                currentData.category = -Math.abs(currentData.category);
-                if (currentData.nodeType === 1) {
-                  currentData.open = false;
-                }
-              }
-            }
-            serieDataMap.get(srcLinkName).open = false;
-            chart.setOption(options);
-          }
-        } else {
-          // 当前根节点是关闭的，那么就需要展开第一层根节点
-          _this.findLinks(serieLinkArr, srcLinkName, serieLinks, false);
-          // console.log(serieLinkArr)
-          if (serieLinkArr.length) {
-            _this.cities = serieLinkArr;
-            _this.showmodal = true;
-            /* _this.$nextTick(()=>{
-               let oModel = document.getElementsByClassName('modal')[0];
-               oModel.style.top = params.event.offsetY + 'px';
-               oModel.style.left = params.event.offsetX + 150+ 'px';
-             });*/
-            serieData.forEach(sd => serieDataMap.set(sd.id, sd));
-            for (let j = 0; j < serieLinkArr.length; j++) {
-              if (serieDataMap.has(serieLinkArr[j])) {
-                let currentData = serieDataMap.get(serieLinkArr[j]);
-                currentData.category = Math.abs(currentData.category);
-              }
-            }
-            //console.log(_this.checkedCities)
-            serieDataMap.get(srcLinkName).open = true;
-            chart.setOption(options);
+      toggleShowNodes(options,n) {
+        let Time = null;
+        clearTimeout(Time);
+        let _this = this,
+          serieData = options.series[0].data,
+          nodeArr = [];
+        for(let i=0;i<serieData.length;i++){
+          if(Math.abs(serieData[i].category) ==n){
+            nodeArr.push(serieData[i]);
           }
         }
+        let num = 0;
+        let len = nodeArr.length;
+        if(n = 10){
+         Time=setInterval(function () {
+           if(num>len-2){
+             clearInterval(Time)
+           }
+           nodeArr[num].category = Math.abs(nodeArr[num].category);
+           _this.chart.setOption(options);
+           num++;
+         },1000)
+
+       }else{
+
+       }
       },
-      findLinks(links, srcLinkName, serieLinks, deep) {
-        // console.log(srcLinkName)
-        let _this = this;
-        let targetLinks = [];
-        serieLinks.filter(link => link.source === srcLinkName).forEach(link => {
-          targetLinks.push(link.target);
-          links.push(link.target)
-        });
-        if (deep) {
-          for (let i = 0; i < targetLinks.length; i++) {
-            _this.findLinks(links, targetLinks[i], serieLinks, deep);
-          }
-        }
-        //.log(targetLinks)
+      showNodes(options,n){
+
       }
     }
   }

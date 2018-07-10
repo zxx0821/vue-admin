@@ -1,7 +1,6 @@
 <template>
   <div id="solutionNum">
     <div :class="className" :id="id" :style="{height:height,width:width}"></div>
-    <button>切换</button>
   </div>
 </template>
 
