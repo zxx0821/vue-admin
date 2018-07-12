@@ -4,23 +4,7 @@
     <transition name="bounce">
       <div :class="className" :id="id" :style="{height:height,width:width}" v-if="show"></div>
     </transition>
-    <div class="modal" v-show="showmodal" id="modelDrag">
-      <div class="visualMes">
-       <div class="visualMes-wrapper">
-         <div class="showImg">
-           <p class="visuimg"><img :src="isdata.img" alt="" class=""></p>
-         </div>
-         <div class="showMess">
-         <p v-for="(item,key) in isdata.message" class="detailMess"
-         ><label class="keyMess">{{key}}</label><span class="valueMess">{{item}}</span></p>
-       </div>
-       </div>
-      </div>
-      <!--<div class="btn">
-        <el-button type="primary" size="mini" @click="cancelModel">取消</el-button>
-        <el-button type="primary" size="mini" @click="selectedmodel">确定</el-button>
-      </div>-->
-    </div>
+    <modelDetail  v-show="showmodal" @cancelModel="cancelModel" :isdata="isdata"> </modelDetail>
   </div>
 </template>
 
@@ -51,53 +35,23 @@
       return {
         chart: null,
         show:true,
-        form: {
-          region: ''
-        },
         onOff:true,
         showmodal: false,
-        isdata: {
-          img:  require('../../assets/logo.png'),
+        isdata: [{
+          img: "",
           message:{
-            title: "整体内容超出div宽度后自动换行的css代码内容超出div宽度后自动换行的css代码内容超出div宽度后自动换行的css代码",
-            bubble:true,
-            button: 0,
-            buttons: 1,
-            cancelBubble: false,
-            cancelable: true,
-            clientX: 977,
-            clientY: 475,
-            composed: true,
-            ctrlKey: false,
-            currentTarget: null,
-            defaultPrevented: false,
-            detail: 1,
-            eventPhase: 0,
-            fromElement: null,
-            isTrusted: true,
-            layerX: 90,
-            layerY: -93,
-            metaKey: false,
-            movementX: 0,
-            movementY: 0,
-            offsetX: 300,
-            offsetY: 5,
-            pageX: 977,
-            pageY: 475
           }
-          }
+        }]
       }
     },
     components: {
       modelDetail
     },
-    computed: {
-    },
     mounted(){
       this.initChart();
-      this.dragable();
     },
     methods: {
+      /**初始化数据*/
       initChart(){
         let _this = this;
         _this.chart = _this.$echarts.init(document.getElementById(this.id));
@@ -186,7 +140,7 @@
                     "color": "source",
                     "width": "3",
                     "type": "solid",
-                    "curveness": 0.1,
+                    "curveness": 0,
                     "opacity": 1
                   }
                 },
@@ -199,27 +153,45 @@
                   "edgeLength":[10,200],
                   "layoutAnimation" : true
                 },
-                //"showSymbol": true,
-                //"yAxisIndex": 0,
-                //"z": 2
               }
             ]
           };
           _this.chart.setOption(options);
           _this.chart.on("click", function (params) {
+            _this.isdata = [{
+              img:  require('../../assets/logo.png'),
+              message:{
+                title: "自动换行的css代码自动换自动换行的码自动换行的css代码",
+                offsetX: 300,
+                offsetY: 5,
+                pageX: 977,
+                pageY: 475
+              }
+            },{
+              img:  require('../../assets/1.jpg'),
+              message:{
+                title: "轮播图js",
+                offsetX: 300,
+                offsetY: 5,
+                pageX: 977,
+                pageY: 475,
+                des:"浏览器支浏览器支持所有主流浏览器都支持 overflow-y 属性注释：overflow-y 属性无法在 IE8 以及更早的浏览器正确地工作。浏览器支持所有主流浏览器都支持 overflow-y 属性注释：overflow-y 属性无法在 IE8 以及更早的浏览器正确地工作。持所有主流浏览器都支持 overflow-y 属性注释：overflow-y 属性无法在 IE8 以及更早的浏览器正确地工作。浏览器支持所有主流浏览器都支持 overflow-y 属性注释：overflow-y 属性无法在 IE8 以及更早的浏览器正确地工作。",
+                page:"自动换行的css代码自动换自动换行的码自动换行的css代码自动换行的css代码自动换自动换行的码自动换行的css代码自动换行的css代码自动换自动换行的码自动换行的css代码自动换行的css代码自动换自动换行的码自动换行的css代码自动换行的css代码自动换自动换行的码自动换行的css代码自动换行的css代码自动换自动换行的码自动换行的css代码"
+              }
+            }];
             _this.showmodal = true;
           });
         }).catch((err)=> {
           console.log(err)
         })
       },
-      select(sorce, nodes){
-        for(let i=0;i<nodes.length;i++){
-          if(nodes[i].id === sorce){
-            return nodes[i].name;
-          }
-        }
-      },
+      /**
+       * @param data  遍历的数据
+       * @param nodes  存放节点信息
+       * @param links  存放连接信息
+       * @param n      递归的次数,即深度
+       * @returns {{nodes: *, links: *}}
+       */
       solutionNum(data,nodes,links,n){
         n++;
         let _this = this;
@@ -249,81 +221,12 @@
         }
         return {nodes,links};
       },
-      toggleShowNodes(chart, params) {
-        //console.log(params)
-        let _this = this;
-        let open = !!params.data.open,
-          options = chart.getOption(),
-          seriesIndex = params.seriesIndex,
-          srcLinkName = params.data.id,
-          serieLinks = options.series[seriesIndex].links,
-          serieData = options.series[seriesIndex].data,
-          serieDataMap = new Map(),
-          serieLinkArr = [];
-        // 当前根节点是展开的，那么就需要关闭所有的根节点
-        if (open) {
-          // 递归找到所有的link节点的target的值
-          _this.findLinks(serieLinkArr, srcLinkName, serieLinks, true);
-          // console.log(serieLinkArr.length)
-          if (serieLinkArr.length) {
-            serieData.forEach(sd => serieDataMap.set(sd.id, sd));
-            for (let i = 0; i < serieLinkArr.length; i++) {
-              if (serieDataMap.has(serieLinkArr[i])) {
-                let currentData = serieDataMap.get(serieLinkArr[i]);
-                currentData.category = -Math.abs(currentData.category);
-                if (currentData.nodeType === 1) {
-                  currentData.open = false;
-                }
-              }
-            }
-            serieDataMap.get(srcLinkName).open = false;
-            chart.setOption(options);
-          }
-        } else {
-          // 当前根节点是关闭的，那么就需要展开第一层根节点
-          _this.findLinks(serieLinkArr, srcLinkName, serieLinks, false);
-          // console.log(serieLinkArr)
-          if (serieLinkArr.length) {
-            _this.cities = serieLinkArr;
-            _this.showmodal = true;
-            /* _this.$nextTick(()=>{
-               let oModel = document.getElementsByClassName('modal')[0];
-               oModel.style.top = params.event.offsetY + 'px';
-               oModel.style.left = params.event.offsetX + 150+ 'px';
-             });*/
-            serieData.forEach(sd => serieDataMap.set(sd.id, sd));
-            for (let j = 0; j < serieLinkArr.length; j++) {
-              if (serieDataMap.has(serieLinkArr[j])) {
-                let currentData = serieDataMap.get(serieLinkArr[j]);
-                currentData.category = Math.abs(currentData.category);
-              }
-            }
-            //console.log(_this.checkedCities)
-            serieDataMap.get(srcLinkName).open = true;
-            chart.setOption(options);
-          }
-        }
-      },
-      findLinks(links, srcLinkName, serieLinks, deep) {
-        let _this = this;
-        let targetLinks = [];
-        serieLinks.filter(link => link.source === srcLinkName).forEach(link => {
-          targetLinks.push(link.target);
-          links.push(link.target)
-        });
-        if (deep) {
-          for (let i = 0; i < targetLinks.length; i++) {
-            _this.findLinks(links, targetLinks[i], serieLinks, deep);
-          }
-        }
-      },
+      /* 点击按钮改变数据布局方式*/
       toChange(){
         let _this = this;
         let dom = document.getElementById(this.id);
-        console.log(dom.className)
         let option = _this.chart.getOption();
-       console.log(option.series[0].categories);
-       if(_this.onOff){
+        if(_this.onOff){
          option.series[0].layout= 'circular';
          option.series[0].circular.rotateLabel= true;
          option.series[0].symbolSize=function(value, params){
@@ -335,8 +238,8 @@
              default:return 10;
            }
          };
-         dom.removeAttribute("class")
-         dom.setAttribute("class","force")
+         dom.removeAttribute("class");
+         dom.setAttribute("class","force");
          _this.onOff = false;
        }else{
          option.series[0].layout= 'force';
@@ -357,42 +260,12 @@
        }
         _this.chart.setOption(option);
       },
-      selectedmodel(){
-        let _this = this;
-        _this.showmodal = false;
-      },
+      /**
+       * 自定义函数,隐藏模态框
+       */
       cancelModel(){
         let _this = this;
         _this.showmodal = false;
-      },
-      dragable(e){
-        let dom = document.getElementById("modelDrag");
-        let parentDom = document.getElementById("solutionNum")
-        dom.onmousedown = function(e) {
-           e = e || window.event; //兼容ie浏览器
-          let diffX = e.clientX - dom.offsetLeft;
-          let diffY = e.clientY - dom.offsetTop;
-          if(typeof dom.setCapture!='undefined'){
-            dom.setCapture();
-          }
-          document.onmousemove = function(e) {
-            e = e || window.event; //兼容ie浏览器
-            let left =e.clientX-diffX;
-            let top=e.clientY-diffY;
-            //移动时重新得到物体的距离，解决拖动时出现晃动的现象
-            dom.style.left = left+ 'px';
-            dom.style.top = top + 'px';
-          };
-          document.onmouseup = function(e) { //当鼠标弹起来的时候不再移动
-            this.onmousemove = null;
-            this.onmouseup = null; //预防鼠标弹起来后还会循环（即预防鼠标放上去的时候还会移动）
-
-            //修复低版本ie bug
-            if(typeof dom.releaseCapture!='undefined'){
-              dom.releaseCapture();
-            }
-          };
-        };
       }
     }
   }
@@ -404,56 +277,7 @@
     height: 100vh;
     position:relative;
   }
-  #modelDrag{
-    position:absolute;
-    top:50%;
-    left:50%;
-    z-index: 900;
-    border-radius: 6px;
-    background: #eee;
-    color: #000;
-    padding:10px 0 10px 0;
-    transform: translate(-50%,-50%);
-    cursor: move;
-  }
-  .visualMes{
-  }
-  .visualMes .visualMes-wrapper{
-    display: flex;
-    width: 400px;
-  }
-  .visualMes-wrapper .showImg{
-    flex: 1;
-    box-sizing: border-box;
-    height:400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .showImg .visuimg{
-  }
-  .visualMes .showMess{
-    flex: 1;
-    height:400px;
-    overflow-y: scroll;
-    font-size: 12px;
-  }
-  .showMess .detailMess{
-    margin-bottom: 8px;
-  }
-  .showMess .keyMess{
-    color: #333;
-  }
-  .showMess .valueMess{
-    margin-left: 8px;
-    color: #666;
-  }
-  .modal .btn{
-    width:100%;
-    text-align: center;
-    margin-top:10px;
-  }
-  /*.circle{
+  .circle{
      animation-name: myfirst;
      animation-duration: 5s;
      animation-timing-function: linear;
@@ -510,5 +334,5 @@
      100% {
        transform: scale(1);
      }
-   }*/
+   }
 </style>

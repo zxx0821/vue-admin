@@ -250,7 +250,6 @@
                 currentData.category = Math.abs(currentData.category);
               }
             }
-            //console.log(_this.checkedCities)
             serieDataMap.get(srcLinkName).open = true;
             chart.setOption(options);
           }
