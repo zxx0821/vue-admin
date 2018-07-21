@@ -1,0 +1,107 @@
+#app{
+  /*pc端*/
+  /*左侧边栏*/
+  .sidebar-container{
+    transition: width 0.28s;
+    width: 200px !important;
+    height: 100%;
+    position: fixed;
+    font-size: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+    overflow: hidden;
+    .horizontal-collapse-transition {
+      transition: 0s width ease-in-out, 0s padding-left ease-in-out, 0s padding-right ease-in-out;
+    }
+    .scrollbar-wrapper{
+      overflow-x:hidden !important;
+      height:100%;
+      .el-scrollbar__view{
+        height:100%;
+      }
+    }
+    .is-horizontal {
+      display: none;
+    }
+    .el-menu{
+      height:100%;
+      width:100%;
+      border:none;
+      font-size: 0;
+      i.fa{
+        font-size:16px !important;
+      }
+      .el-menu-item{
+        width:100%;
+        .el-tooltip{
+          font-size: 0;
+        }
+        .el-submenu__title{
+          font-size: 0;
+        }
+      }
+    }
+    a {
+      display: inline-block;
+      width: 100%;
+      overflow: hidden;
+    }
+    .el-menu-icon{
+      margin-right:16px;
+    }
+  }
+  /* 侧边栏close */
+  .hideSidebar{
+    .sidebar-container{
+      width: 40px !important;
+    }
+    .main-container{
+      margin-left: 40px;
+    }
+    .submenu-title-noDropdown{
+      padding:0 10px !important;
+      position: relative;
+      .el-tooltip{
+        padding:0 10px !important;
+      }
+    }
+    .el-submenu{
+      overflow: hidden;
+      &>.el-submenu__title {
+        padding:0 10px !important;
+      }
+    }
+  }
+  /* 主体区域*/
+  .main-container{
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left: 200px;
+  }
+
+  /*移动端*/
+  .mobile {
+    .main-container{
+      margin-left:0
+    }
+    .sidebar-container {
+      transition: transform .28s;
+      width:200px !important;
+    }
+    &.hideSidebar {
+      .sidebar-container {
+        transition-duration: .3s;
+        transform: translate3d(-200px, 0, 0);
+      }
+    }
+  }
+  /*动画*/
+  .withoutAnimation {
+    .main-container,
+    .sidebar-container {
+      transition: none;
+    }
+  }
+}

@@ -53,13 +53,13 @@ export default {
 
     /*获取用户列表*/
     mock.onGet('/user/list').reply(config => {
-      let {name} = config.params;
-      let mockUsers = _Users.filter(user=>{
-        if (name && user.name.indexOf(name) == -1) return false;
-        return true;
+      let {name} = config.params;  /* get 方式传递的参数 param */
+      let mockUsers = _Users.filter(user=>{    /* 筛选遍历用户信息 */
+        if (name && user.name.indexOf(name) == -1) return false;  /* name参数存在,但数据库中查找不到返回false */
+        return true;  /* 返回数据 */
       });
       return new Promise((resolve, reject) => {
-        setTimeout(()=>{
+        setTimeout(()=>{    /* resolve 获取成功返回200,状态码,及数据user */
           resolve([200, {
             users:mockUsers
           }]);
@@ -69,15 +69,13 @@ export default {
 
     /*获取用户列表 (分页)*/
     mock.onGet('/user/listPage').reply(config => {
-      let {page,name,isAdmin} = config.params;
+      let {currentPage,username, pageSize} = config.params;
       let mockUsers = _Users.filter(user => {
-        if (name && user.name.indexOf(name) < 0 ) {return false}
-        if (isAdmin && user.isAdmin !== isAdmin) {return false}
+        if (username && user.username.indexOf(username) < 0 ) {return false}
         return true;
       });
       let total = mockUsers.length;
-      let pageSize = 10;
-      mockUsers = mockUsers.filter((u, index) => index < pageSize * page && index >= pageSize * (page - 1));
+      mockUsers = mockUsers.filter((u, index) => index < pageSize * currentPage && index >= pageSize * (currentPage - 1));
       return new Promise((resolve, reject) => {
         setTimeout(()=>{
           resolve([200, {
@@ -92,8 +90,8 @@ export default {
     /*批量删除用户*/
     mock.onGet('/user/batchremove').reply(config => {
       let {ids} = config.params;
-      ids = ids.split(',');
-      _Users =_Users.filter(u=>!ids.includes(u.id));
+      ids = ids.split(',');  /* 按 , 分割成数组 */
+      _Users =_Users.filter(u=>!ids.includes(u.id)); /* filter筛选 ids 需要删除的数据包含在_Users里的过滤掉*/
       return new Promise((resolve, reject) => {
         setTimeout(()=>{
           resolve([200, {
@@ -118,6 +116,9 @@ export default {
       });
     });
     /*编辑用户*/
+    /*some() 方法用于检测数组中的元素是否满足指定条件（函数提供）。
+           some() 方法会依次执行数组的每个元素：
+          如果有一个元素满足条件，则表达式返回true , 剩余的元素不会再执行检测。  如果没有满足条件的元素，则返回false。*/
     mock.onGet('/user/edit').reply(config => {
       let {id, createDate, username, sex, age, birth, departe, office, isAdmin} = config.params;
       _Users.some(u => {
@@ -144,7 +145,7 @@ export default {
     });
 
     /*新增用户*/
-    mock.onGet('/user/add').reply(config => {
+    mock.onGet('/user/addUser').reply(config => {
       let {createDate, username, sex, age, birth, departe, office, isAdmin} = config.params;
       _Users.push({
         createDate: createDate,

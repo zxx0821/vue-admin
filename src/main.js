@@ -9,8 +9,9 @@ import Vuex from 'vuex'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'font-awesome/css/font-awesome.min.css'
+import '../src/style/index.less'
 import Mock from './mock'
-import store from './vuex/store'
+import store from './vuex/index'
 import echarts from 'echarts'
 import d3 from 'd3'
 import VueI18n from 'vue-i18n'
@@ -23,7 +24,6 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(Vuex);
 axios.defaults.timeout = 5000;
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router);
-
+import layout from '../views/layout/layout'
 let router = new Router({
   routes: [
     {
@@ -19,37 +19,41 @@ let router = new Router({
       meta: {requireAuth: false}
     },
     {
-      path: '/Home',
-      name: '用户管理',
-      component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-user',
+      path: '/',
+      name: '首页',
+      component:layout,
+      iconCls: 'fa fa-user el-menu-icon',
+      leaf: true,
       meta: {requireAuth: true},
-      children:[
+      children: [
         {
-          path: '/User',
-          component: resolve => require(['../views/User/User'],resolve),
-          name:'用户列表',
-          meta: {requireAuth: true}
-        },
-        {
-          path: '/UserInfo',
-          component: resolve => require(['../views/User/UserInfo'],resolve),
-          name:'用户信息',
-          meta: {requireAuth: true}
-        },
-        {
-          path: '/AdminInfo',
-          component: resolve => require(['../views/User/AdminInfo'],resolve),
-          name:'管理员信息',
+          path: 'Home',
+          component: resolve => require(['../views/Home/home'],resolve),
+          name:'首页',
           meta: {requireAuth: true}
         }
       ]
     },
     {
-      path: '/Home',
+      path: '/layout',
+      name: '用户管理',
+      component:layout,
+      iconCls: 'fa fa-user el-menu-icon',
+      meta: {requireAuth: true},
+      children:[
+        {
+          path: '/UserInfo',
+          component: resolve => require(['../views/User/UserInfo'],resolve),
+          name:'用户信息',
+          meta: {requireAuth: true}
+        }
+      ]
+    },
+    {
+      path: '/layout',
       name: '资源管理',
-      component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-skyatlas',
+      component: layout,
+      iconCls: 'fa fa-skyatlas el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -67,10 +71,10 @@ let router = new Router({
       ]
     },
     {
-      path: '/Home',
+      path: '/layout',
       name: '日志管理',
-      component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-calendar',
+      component: layout,
+      iconCls: 'fa fa-calendar el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -88,10 +92,10 @@ let router = new Router({
       ]
     },
     {
-      path: '/Home',
+      path: '/layout',
       name: 'echarts',
-      component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-calendar',
+      component:layout,
+      iconCls: 'fa fa-calendar el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -141,6 +145,12 @@ let router = new Router({
           component: resolve => require(['../views/echarts/radialTree'],resolve),
           name:'radialTree',
           meta: {requireAuth: true}
+        },
+        {
+          path: '/Tree',
+          component: resolve => require(['../views/echarts/Tree'],resolve),
+          name:'Tree',
+          meta: {requireAuth: true}
         }
       ]
     },
@@ -148,13 +158,29 @@ let router = new Router({
       path: '/Home',
       name: 'D3',
       component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-calendar',
+      iconCls: 'fa fa-calendar el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
           path: '/d3forceGraph',
           component: resolve => require(['../views/D3/forceGraph'],resolve),
           name:'d3forceGraph',
+          meta: {requireAuth: true}
+        }
+      ]
+    },
+    {
+      path: '/layout',
+      name: 'form',
+      component: layout,
+      iconCls: 'fa fa-calendar el-menu-icon',
+      meta: {requireAuth: true},
+      leaf: true,
+      children:[
+        {
+          path: '/form',
+          component: resolve => require(['../views/form/activityList'],resolve),
+          name:'activityList',
           meta: {requireAuth: true}
         }
       ]

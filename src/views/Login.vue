@@ -26,26 +26,29 @@
 <script>
   import {requestLogin} from '../api/api';
     export default {
-        name: "Login",
-        data(){
-          return{
-            logining: false,
-            ruleForm2: {
-              account: 'admin',
-              checkPass: '123456'
-            },
-            rules2: {
-              account: [
-                { required: true, message: '请输入用户名', trigger: 'blur' }
-              ],
-              checkPass: [
-                { required: true, message: '请输入密码', trigger: 'blur' }
-              ]
-            },
-            checked: true,
-            title: 'Admin Login'
-          }
-        },
+
+      name: "Login",
+      data(){
+        return{
+          logining: false,
+          ruleForm2: {
+            account: 'admin',
+            checkPass: '123456'
+          },
+          rules2: {
+            account: [
+              { required: true, message: '请输入用户名', trigger: 'blur' }
+            ],
+            checkPass: [
+              { required: true, message: '请输入密码', trigger: 'blur' }
+            ]
+          },
+          checked: true,
+          title: 'Admin Login'
+        }
+      },
+      mounted () {
+      },
       methods:{
         handleSubmit2(ev) {
           let _this = this;
@@ -69,7 +72,7 @@
                   })
                 }else{
                   sessionStorage.setItem('user', JSON.stringify(user));
-                  this.$router.push({path:'/User'});
+                  this.$router.push({path:'Home'});
                   let redirect = decodeURIComponent(this.$route.query.redirect || '/');
                   this.$router.push({
                     path: redirect

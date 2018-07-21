@@ -13,6 +13,8 @@ export const removeUser = params => { return axios.get(`${base}/user/remove`, {p
 
 export const editUser = params => { return axios.get(`${base}/user/edit`, {params:params});};
 
+export const addUser = params => { return axios.get(`${base}/user/addUser`, {params:params});};
+
 export const getEchartsData = params => { return axios.get(`${base}/echarts/lesmisterable`, {params:params});};
 
 export const getforceGraph = params => { return axios.get(`${base}/echarts/forceGraph`, {params:params});};

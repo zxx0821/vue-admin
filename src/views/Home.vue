@@ -24,7 +24,7 @@
           <aside :class="collapsed?'menu-collapsed':'menu-expanded'">
             <el-menu
               :default-active="$route.path"
-              class="el-menu-vertical-demo zz"
+              class="el-menu-vertical-demo"
               @open="handleOpen"
               @close="handleClose"
               @select="handleSelect"

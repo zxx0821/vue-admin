@@ -49,7 +49,7 @@ export default {
       return row.sex === 1 ? '男' : row.sex === 0 ? '女' : '未知';
     },
     formatAdmin: function (row, column) {
-      return row.isAdmin === 1 ? '男' : row.isAdmin === 0 ? '女' : '未知';
+      return row.isAdmin === 1 ? '管理员' : row.isAdmin === 0 ? '用户' : '未知';
     },
   }
 }
