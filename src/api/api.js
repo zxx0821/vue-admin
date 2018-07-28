@@ -27,3 +27,8 @@ export const radialTree = params => { return axios.get(`${base}/echarts/radialTr
 
 export const d3forceGraph = params => { return axios.get(`${base}/d3/forceGraph`, {params:params});};
 
+/*任务api*/
+export const taskList = params => { return axios.get(`${base}/task/taskList`, {params:params});};
+export const editTask = params => { return axios.get(`${base}/task/edit`, {params:params});};
+export const createTask = params => { return axios.get(`${base}/task/createTask`, {params:params});};
+

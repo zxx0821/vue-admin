@@ -15,6 +15,8 @@ import store from './vuex/index'
 import echarts from 'echarts'
 import d3 from 'd3'
 import VueI18n from 'vue-i18n'
+import { Message, Loading } from 'element-ui';
+
 Vue.use(Router);
 Vue.use(VueI18n);
 Mock.bootstrap();
@@ -30,8 +32,43 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App/>',
+  data() {
+    return{
+    }
+  },
+  methods: {
+  }
 });
+
+let loading = null;
+let needLoadingRequestCount = 0
+
+function startLoading() {    //使用Element loading-start 方法
+  loading = Loading.service({
+    lock: true,
+    text: '加载中……',
+    background: 'rgba(0, 0, 0, 0.7)'
+  })
+}
+
+function endLoading() {    //使用Element loading-close 方法
+  loading.close()
+}
+
+function showFullScreenLoading() {
+  if (needLoadingRequestCount === 0) {
+    startLoading()
+  }
+  needLoadingRequestCount++
+}
+function tryHideFullScreenLoading() {
+  if (needLoadingRequestCount <= 0) return
+  needLoadingRequestCount--
+  if (needLoadingRequestCount === 0) {
+    endLoading()
+  }
+}
 
 /*http request 拦截器*/
 axios.interceptors.request.use(
@@ -39,6 +76,7 @@ axios.interceptors.request.use(
     if(sessionStorage.getItem('_token')){
       config.headers.Authorization = `token${sessionStorage.getItem('_token')}`;
     }
+    showFullScreenLoading()
     return config;
   },
   err => {
@@ -47,6 +85,7 @@ axios.interceptors.request.use(
 );
 axios.interceptors.response.use(
   response => {
+    tryHideFullScreenLoading()
     return response;
   },
   error => {

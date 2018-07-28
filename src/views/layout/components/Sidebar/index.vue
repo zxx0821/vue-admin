@@ -17,11 +17,11 @@
         v-for="(item,index) in $router.options.routes"
         v-if="!item.hidden &&item.children">
         <el-menu-item  v-if="item.leaf" :index="item.children[0].path" :class="{'submenu-title-noDropdown':!isNest}">
-          <i :class="item.iconCls"></i><span slot="title">{{item.children[0].name}}</span>
+          <i :class="item.iconCls"></i><span slot="title">{{item.children[0].title}}</span>
         </el-menu-item>
         <el-submenu v-else :index="index+''">
-          <template slot="title"><i :class="item.iconCls"></i><span>{{item.name}}</span></template>
-          <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.name}}</el-menu-item>
+          <template slot="title"><i :class="item.iconCls"></i><span>{{item.title}}</span></template>
+          <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.title}}</el-menu-item>
         </el-submenu>
       </template>
     </el-menu>
