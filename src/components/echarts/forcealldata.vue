@@ -204,7 +204,7 @@
           serieData = options.series[0].data,
           nodeArr = [];
         for(let i=0;i<serieData.length;i++){
-          if(Math.abs(serieData[i].category) ==n){
+          if(Math.abs(serieData[i].category) ===n){
             nodeArr.push(serieData[i]);
           }
         }

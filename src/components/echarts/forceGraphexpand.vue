@@ -202,7 +202,6 @@
 
       },
       toggleShowNodes(chart, params) {
-        console.log(params.data.open)
         let _this = this;
         let open = !!params.data.open,
           options = chart.getOption(),
@@ -216,7 +215,6 @@
         if (open) {
           // 递归找到所有的link节点的target的值
           _this.findLinks(serieLinkArr, srcLinkName, serieLinks, true);
-          console.log(serieLinkArr.length)
           if (serieLinkArr.length) {
             serieData.forEach(sd => serieDataMap.set(sd.name, sd));
             for (let i = 0; i < serieLinkArr.length; i++) {
@@ -234,7 +232,6 @@
         } else {
           // 当前根节点是关闭的，那么就需要展开第一层根节点
           _this.findLinks(serieLinkArr, srcLinkName, serieLinks, false);
-          console.log(serieLinkArr)
           if (serieLinkArr.length) {
             _this.cities = serieLinkArr;
             _this.showmodal = true;
@@ -250,6 +247,7 @@
                 currentData.category = Math.abs(currentData.category);
               }
             }
+            console.log(serieDataMap.get(srcLinkName))
             serieDataMap.get(srcLinkName).open = true;
             chart.setOption(options);
           }

@@ -13,7 +13,7 @@ import '../src/style/index.less'
 import Mock from './mock'
 import store from './vuex/index'
 import echarts from 'echarts'
-import d3 from 'd3'
+import * as d3 from 'd3'
 import VueI18n from 'vue-i18n'
 Vue.use(Router);
 Vue.use(VueI18n);

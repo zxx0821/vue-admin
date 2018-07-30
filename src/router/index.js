@@ -22,7 +22,7 @@ let router = new Router({
       path: '/',
       name: '首页',
       component:layout,
-      iconCls: 'fa fa-user el-menu-icon',
+      iconCls: 'fa fa-home el-menu-icon',
       leaf: true,
       meta: {requireAuth: true},
       children: [
@@ -41,7 +41,7 @@ let router = new Router({
       iconCls: 'fa fa-user el-menu-icon',
       meta: {requireAuth: true},
       children:[
-        {
+       {
           path: '/UserInfo',
           component: resolve => require(['../views/User/UserInfo'],resolve),
           name:'用户信息',
@@ -53,7 +53,7 @@ let router = new Router({
       path: '/layout',
       name: '资源管理',
       component: layout,
-      iconCls: 'fa fa-skyatlas el-menu-icon',
+      iconCls: 'fa fa-cubes el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -74,7 +74,7 @@ let router = new Router({
       path: '/layout',
       name: '日志管理',
       component: layout,
-      iconCls: 'fa fa-calendar el-menu-icon',
+      iconCls: 'fa fa-bookmark el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -95,7 +95,7 @@ let router = new Router({
       path: '/layout',
       name: 'echarts',
       component:layout,
-      iconCls: 'fa fa-calendar el-menu-icon',
+      iconCls: 'fa fa-bar-chart el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -158,13 +158,25 @@ let router = new Router({
       path: '/Home',
       name: 'D3',
       component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-calendar el-menu-icon',
+      iconCls: 'fa fa-pie-chart el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
           path: '/d3forceGraph',
           component: resolve => require(['../views/D3/forceGraph'],resolve),
           name:'d3forceGraph',
+          meta: {requireAuth: true}
+        },
+        {
+          path: '/collapseTree',
+          component: resolve => require(['../views/D3/CollapsibleTree'],resolve),
+          name:'collapseTree',
+          meta: {requireAuth: true}
+        },
+        {
+          path: '/test',
+          component: resolve => require(['../views/D3/test'],resolve),
+          name:'test',
           meta: {requireAuth: true}
         }
       ]
@@ -173,7 +185,7 @@ let router = new Router({
       path: '/layout',
       name: 'form',
       component: layout,
-      iconCls: 'fa fa-calendar el-menu-icon',
+      iconCls: 'fa fa-wpforms el-menu-icon',
       meta: {requireAuth: true},
       leaf: true,
       children:[

@@ -19,7 +19,7 @@
      </el-col>
     <!--工具条 end-->
     <!--列表 start-->
-    <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="handleSelectionChange" style="width: 100%;border:1px solid red">
+    <el-table :data="users" highlight-current-row v-loading="listLoading" @selection-change="handleSelectionChange" style="width: 100%;">
       <el-table-column type="selection" width="60" align="center"></el-table-column>
       <el-table-column type="index" label="序号" :index="typeIndex" width="60" align="center"></el-table-column>
       <el-table-column label="日期" width="180" prop="createDate" align="center">
@@ -40,7 +40,7 @@
       <el-table-column prop="isAdmin" label="管理员" width="120" :formatter="formatAdmin" align="center">
       </el-table-column>
       <el-table-column label="操作" width="150" align="center">
-        <template scope="scope">
+        <template slot-scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
         </template>

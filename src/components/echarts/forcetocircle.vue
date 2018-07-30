@@ -1,10 +1,8 @@
 <template>
   <div id="solutionNum">
-    <button @click="toChange">切换</button>
-    <transition name="bounce">
-      <div :class="className" :id="id" :style="{height:height,width:width}" v-if="show"></div>
-    </transition>
-    <modelDetail  v-show="showmodal" @cancelModel="cancelModel" :isdata="isdata"> </modelDetail>
+   <!-- <button @click="toChange">切换</button>-->
+    <div :class="className" :id="id" :style="{height:height,width:width}" v-if="show"></div>
+  <!--  <modelDetail  v-show="showmodal" @cancelModel="cancelModel" :isdata="isdata"> </modelDetail>-->
   </div>
 </template>
 
@@ -89,8 +87,8 @@
               })
             }],
             animation:false,
-           animationDuration: 750,
-           animationEasingUpdate: 'quinticInOut',
+            animationDuration: 750,
+            animationEasingUpdate: 'quinticInOut',
             "series": [
               {
                 "type": "graph",
@@ -227,37 +225,37 @@
         let dom = document.getElementById(this.id);
         let option = _this.chart.getOption();
         if(_this.onOff){
-         option.series[0].layout= 'circular';
-         option.series[0].circular.rotateLabel= true;
-         option.series[0].symbolSize=function(value, params){
-           switch (params.data.category) {
-             case 0:return 50;break;
-             case 1:return 40;break;
-             case 2:return 30;break;
-             case 3:return 20;break;
-             default:return 10;
-           }
-         };
-         dom.removeAttribute("class");
-         dom.setAttribute("class","force");
-         _this.onOff = false;
-       }else{
-         option.series[0].layout= 'force';
-         option.series[0].symbolSize=function(value, params){
-           switch (params.data.category) {
-             case 0:return 120;break;
-             case 1:return 100;break;
-             case 2:return 80;break;
-             case 3:return 60;break;
-             case 4:return 40;break;
-             case 5:return 20;break;
-             default:return 10;
-           }
-         };
-         dom.removeAttribute("class");
-         dom.setAttribute("class","circle");
-         _this.onOff = true;
-       }
+          option.series[0].layout= 'circular';
+          option.series[0].circular.rotateLabel= true;
+          option.series[0].symbolSize=function(value, params){
+            switch (params.data.category) {
+              case 0:return 50;break;
+              case 1:return 40;break;
+              case 2:return 30;break;
+              case 3:return 20;break;
+              default:return 10;
+            }
+          };
+          dom.removeAttribute("class");
+          dom.setAttribute("class","force");
+          _this.onOff = false;
+        }else{
+          option.series[0].layout= 'force';
+          option.series[0].symbolSize=function(value, params){
+            switch (params.data.category) {
+              case 0:return 120;break;
+              case 1:return 100;break;
+              case 2:return 80;break;
+              case 3:return 60;break;
+              case 4:return 40;break;
+              case 5:return 20;break;
+              default:return 10;
+            }
+          };
+          dom.removeAttribute("class");
+          dom.setAttribute("class","circle");
+          _this.onOff = true;
+        }
         _this.chart.setOption(option);
       },
       /**
@@ -278,61 +276,61 @@
     position:relative;
   }
   .circle{
-     animation-name: myfirst;
-     animation-duration: 5s;
-     animation-timing-function: linear;
-     animation-iteration-count: 1;
-     animation-direction: alternate;
-     animation-play-state: running;
-   }
-   @keyframes myfirst {
-     0%{transform: scale(0.1);}
-     100%{transform: none;}
-   }
-   .bounce-enter-active {
-     animation: bounce-in .5s;
-   }
-   .bounce-leave-active {
-     animation: bounce-in .5s reverse;
-   }
-   @keyframes bounce-in {
-     0% {
-       transform: scale(0);
-     }
-     50% {
-       transform: scale(1.5);
-     }
-     100% {
-       transform: scale(1);
-     }
-   }
-   .force{
-     animation-name: first;
-     animation-duration: 5s;
-     animation-timing-function: linear;
-     animation-iteration-count: 1;
-     animation-direction: alternate;
-     animation-play-state: running;
-   }
-   @keyframes first {
-     0%{transform: scale(0.1);}
-     100%{transform: none;}
-   }
-   .bounce-enter-active {
-     animation: bounce-in .5s;
-   }
-   .bounce-leave-active {
-     animation: bounce-in .5s reverse;
-   }
-   @keyframes bounce-in {
-     0% {
-       transform: scale(0);
-     }
-     50% {
-       transform: scale(1.5);
-     }
-     100% {
-       transform: scale(1);
-     }
-   }
+    animation-name: myfirst;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: running;
+  }
+  @keyframes myfirst {
+    0%{transform: scale(0.1);}
+    100%{transform: none;}
+  }
+  .bounce-enter-active {
+    animation: bounce-in .5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in .5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .force{
+    animation-name: first;
+    animation-duration: 5s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+    animation-direction: alternate;
+    animation-play-state: running;
+  }
+  @keyframes first {
+    0%{transform: scale(0.1);}
+    100%{transform: none;}
+  }
+  .bounce-enter-active {
+    animation: bounce-in .5s;
+  }
+  .bounce-leave-active {
+    animation: bounce-in .5s reverse;
+  }
+  @keyframes bounce-in {
+    0% {
+      transform: scale(0);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 </style>
