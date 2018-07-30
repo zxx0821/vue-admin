@@ -5,7 +5,7 @@ import {json} from "./echarts/data/echartlesmiserable";
 import {forceGraph,schoolData,radialTree} from "./echarts/data/forceGraph";
 import {dataMap} from "./echarts/data/dataMap"
 import {d3relation} from "./D3/relation";
-
+import {taskList} from './data/task'
 let data_json = json;
 let force_Graph = forceGraph;
 let school_Data = schoolData;
@@ -236,5 +236,96 @@ export default {
         },1000);
       });
     });
+
+    mock.onGet('/task/taskList').reply(config => {
+      let {currentPage,taskTitle, pageSize} = config.params;
+      let mockTask = taskList.filter(task => {
+        if (taskTitle && task.taskTitle.indexOf(taskTitle) < 0 ) {return false}
+        return true;
+      });
+      let total = mockTask.length;
+      mockTask = mockTask.filter((u, index) => index < pageSize * currentPage && index >= pageSize * (currentPage - 1));
+      return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+          resolve([200, {
+            total: total,
+            pageSize:pageSize,
+            taskList:mockTask
+          }]);
+        },1000);
+      });
+    })
+
+    /*编辑任务*/
+    mock.onGet('/task/edit').reply(config => {
+      let { task_id, taskTitle, taskTypes, task_description, createTime, startTime, endTime, activePersonNum,
+        activePersonType, task_region_id, effectiveTimes, imgage, taskPriceType, taskStatus, joinNum, taskPriceNum, pageUrl,
+        wxCode, minDuringTime} = config.params;
+      taskList.some(u => {
+        if(u.task_id === task_id){
+          u.taskTitle = taskTitle;
+          u.taskTypes = taskTypes;
+          u.task_description = task_description;
+          u.createTime = createTime;
+          u.startTime = startTime;
+          u.endTime = endTime;
+          u.activePersonNum = activePersonNum;
+          u.activePersonType = activePersonType;
+          u.task_region_id = task_region_id;
+          u.effectiveTimes = effectiveTimes;
+          u.imgage = imgage;
+          u.taskPriceType = taskPriceType;
+          u.taskStatus = taskStatus;
+          u.joinNum = joinNum;
+          u.taskPriceNum = taskPriceNum;
+          u.pageUrl = pageUrl;
+          u.wxCode = wxCode;
+          u.minDuringTime = minDuringTime;
+          return true;
+        }
+      });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            msg: '编辑成功'
+          }]);
+        }, 500);
+      });
+    });
+
+    /*创建任务*/
+    mock.onGet('/task/createTask').reply(config => {
+      console.log(config.params)
+      let {stepOneData,stepTwoData,stepThreeData} = config.params;
+      taskList.push({
+        taskTitle:stepOneData.taskTitle,
+        taskTypes :stepOneData.taskTypes,
+        task_description :stepOneData.task_description,
+        createTime : new Date(),
+        startTime : stepOneData.startTime,
+        endTime : stepOneData.endTime,
+        activePersonNum : stepOneData.activePersonNum,
+        activePersonType : stepOneData.activePersonType,
+        task_region_id : stepTwoData.task_region_id,
+        effectiveTimes : stepTwoData.effectiveTimes,
+        taskPriceType: stepTwoData.taskPriceType,
+        taskStatus : '进行中',
+        joinNum : 0,
+        taskPriceNum :stepTwoData.taskPriceNum,
+        pageUrl : stepTwoData.pageUrl,
+        wxCode : stepThreeData.wxCode,
+        minDuringTime :stepTwoData.minDuringTime
+      });
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200, {
+            code: 200,
+            msg: '新增成功'
+          }]);
+        }, 500);
+      });
+    });
+
   }
 }

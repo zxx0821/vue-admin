@@ -72,7 +72,7 @@
                   })
                 }else{
                   sessionStorage.setItem('user', JSON.stringify(user));
-                  this.$router.push({path:'Home'});
+                  this.$router.push({path:'/home'});
                   let redirect = decodeURIComponent(this.$route.query.redirect || '/');
                   this.$router.push({
                     path: redirect
