@@ -1,5 +1,6 @@
 <template>
     <div class="login-wrap">
+      <div class="three-bg" ref="threebg" id="canvascontainer"></div>
       <el-form :model="ruleForm2" :rules="rules2" ref="ruleForm2" label-position="left" label-width="0px" class="demo-ruleForm login-container">
         <div class="title-container">
           <h3 class="title">{{title}}</h3>
@@ -24,9 +25,9 @@
 </template>
 
 <script>
+  import {threeWaves} from '../util/threeModul'
   import {requestLogin} from '../api/api';
     export default {
-
       name: "Login",
       data(){
         return{
@@ -48,6 +49,7 @@
         }
       },
       mounted () {
+        // threeWaves()
       },
       methods:{
         handleSubmit2(ev) {
@@ -84,9 +86,11 @@
               return false;
             }
           });
-        }
+        },
+
       }
     }
+
 </script>
 
 <style scoped>

@@ -21,7 +21,7 @@
         </el-menu-item>
         <el-submenu v-else :index="index+''">
           <template slot="title"><i :class="item.iconCls"></i><span>{{item.title}}</span></template>
-          <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden">{{child.title}}</el-menu-item>
+          <el-menu-item v-for="child in item.children" :index="child.path" :key="child.path" v-if="!child.hidden"><i :class="child.iconCls"></i>{{child.title}}</el-menu-item>
         </el-submenu>
       </template>
     </el-menu>

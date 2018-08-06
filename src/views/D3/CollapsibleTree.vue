@@ -3,11 +3,31 @@
     <svg class="d3-tree">
       <g class="container"></g>
     </svg>
+
+    <div>
+      <el-dialog title="节点操作" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="节点名称">
+            <el-input v-model="form.data.name" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="节点深度" >
+            <el-input v-model="form.depth" auto-complete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="父节点" v-if="form.parent">
+            <el-input v-model="form.parent.data.name" auto-complete="off"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
   </div>
 </template>
 
 <script>
-  import {dataMap} from "../../mock/echarts/data/dataMap";
+  import {radialTree} from "../../mock/echarts/data/forceGraph";
   import * as d3 from 'd3';
   export default {
     name: "test",
@@ -22,7 +42,14 @@
         links: [],
         dTreeData: null,
         transform: null,
-        margin: { top: 20, right: 30, bottom: 100, left: 50 }
+        margin: { top: 20, right: 30, bottom: 100, left: 50 },
+        dialogFormVisible: false,
+        form:{
+          data: {name:'',children:[]},
+          depth: 0,
+          children:[],
+          parent:{data:{name:''}}
+        }
       }
     },
     methods: {
@@ -40,15 +67,14 @@
        * @description 获取构造根节点
        */
       getRoot () {
-        let data = [dataMap]
-        let flare = this.initData(data)[0]
-        console.log(flare)
-        let root = d3.hierarchy(flare, d => {
+        /*let data = [dataMap]
+        let flare = this.initData(data)[0]*/
+        console.log(radialTree)
+        let root = d3.hierarchy(radialTree, d => {
           return d.children
         })
         root.x0 = this.height / 2
         root.y0 = 0
-        console.log("getRoot");
         return root
       },
       /**
@@ -59,6 +85,7 @@
           return
         if (d.children) {
           this.$set(d, '_children', d.children)
+          d._children.forEach(this.clickCircle)
           d.children = null
         } else {
           this.$set(d, 'children', d._children)
@@ -73,6 +100,8 @@
       /*鼠标移入文本触发发*/
       clickText (d) {
         console.log(d)
+        this.form = d
+        this.dialogFormVisible = true
       },
       selectNode (node, resultId) {
         let _this = this
@@ -95,7 +124,7 @@
         const svg = d3.select(this.$el).select('svg.d3-tree')
         let link = svg.selectAll("path.link")
         link.attr('class', function (d) {
-         if((d.id === selectParent[0]) ||(d.id === selectParent[1]) || (d.id === selectParent[2]) || (d.id === selectParent[3]) || (d.id === selectParent[4]) || (d.id === selectParent[5]) ){
+          if((d.id === selectParent[0]) ||(d.id === selectParent[1]) || (d.id === selectParent[2]) || (d.id === selectParent[3]) || (d.id === selectParent[4]) || (d.id === selectParent[5]) ){
             return "link link2";
           }
           return "link";
@@ -251,6 +280,7 @@
     },
     mounted () {
       //创建svg画布
+      let _this = this
       this.width = document.getElementById(this.id).clientWidth
       this.height = document.getElementById(this.id).clientHeight
       const svg = d3.select(this.$el).select('svg.d3-tree')
@@ -266,13 +296,19 @@
         })
       this.root = this.getRoot()
       this.update(this.root)
+      this.root.children.forEach(_this.clickCircle)
+    /*  this.update(this.root)
+      this.root.children.forEach(function (item) {
+        item.children.forEach(function (temp) {
+          _this.clickCircle(temp)
+        })
+      })*/
     },
     created() {
       this.id = this.uuid()
     },
     computed: {
       treemap () {
-        console.log("treemap");
         return d3.tree().size([this.height, this.width])
       }
     }
@@ -283,7 +319,7 @@
 <style lang="less">
   .tree-container {
     width: 100%;
-    height: 2000px;
+    height: 100vh;
   }
 
   .d3-tree {

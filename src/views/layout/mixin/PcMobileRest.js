@@ -15,8 +15,6 @@ export default {
   },
   mounted() {
     const isMobile = this.isMobile()
-    console.log('aaa')
-    console.log(isMobile)
     if(isMobile) {
       this.$store.dispatch('TOGGLE_DEVICE', 'mobile')
       this.$store.dispatch('CLOSE_SIDEBAR', { withoutAnimation: true })

@@ -12,7 +12,7 @@
       </el-form>
     </el-col>
     <!--工具条 end-->
-    <el-table :data="taskTableData" border  max-height="450" style="width: 100%" @cell-click="handleSelect" @selection-change="selectionchange">
+    <el-table :data="taskTableData" border style="width: 100%" @cell-click="handleSelect" @selection-change="selectionchange">
       <el-table-column fixed type="selection"></el-table-column>
       <el-table-column fixed property="taskTitle" label="任务名称" width="120"></el-table-column>
       <el-table-column property="startTime" label="开始时间"></el-table-column>

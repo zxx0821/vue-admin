@@ -32,3 +32,6 @@ export const taskList = params => { return axios.get(`${base}/task/taskList`, {p
 export const editTask = params => { return axios.get(`${base}/task/edit`, {params:params});};
 export const createTask = params => { return axios.get(`${base}/task/createTask`, {params:params});};
 
+/*员工信息*/
+export const staffinfo = params => { return axios.get(`${base}/staff/listPage`, {params:params});};
+

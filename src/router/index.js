@@ -10,7 +10,7 @@ let router = new Router({
       name: 'Login',
       component: resolve => require(['../views/Login'],resolve),
       hidden: true,
-      meta: {requireAuth: false}
+      meta: {requireAuth: false, title: '登录',}
     },
     {
       path: '/Login',
@@ -18,23 +18,23 @@ let router = new Router({
       name: 'Login',
       component: resolve => require(['../views/Login'],resolve),
       hidden: true,
-      meta: {requireAuth: false}
+      meta: {requireAuth: false, title: '登录',}
     },
     {
       path: '/home',
       name: 'home',
       title: '首页',
       component:layout,
-      iconCls: 'fa fa-home el-menu-icon',
-      leaf: true,
-      meta: {requireAuth: true},
+      iconCls: 'fa fa-university fa-fw el-menu-icon',
+      hidden: true,
+      meta: {requireAuth: true,title: '首页',},
       children: [
         {
           path: '',
           component: resolve => require(['../views/Home/home'],resolve),
           name: 'index',
           title: '首页',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title: '首页',}
         }
       ]
     },
@@ -43,15 +43,16 @@ let router = new Router({
       title: '用户管理',
       name:'UserAdmin',
       component:layout,
-      iconCls: 'fa fa-user el-menu-icon',
-      meta: {requireAuth: true},
+      iconCls: 'fa fa-user fa-fw el-menu-icon',
+      meta: {requireAuth: true, title: '用户管理',},
       children:[
        {
           path: '/UserInfo',
           component: resolve => require(['../views/User/UserInfo'],resolve),
           title:'用户信息',
           name: 'userInfo',
-          meta: {requireAuth: true}
+         iconCls: 'fa fa-user-o fa-fw',
+          meta: {requireAuth: true,title:'用户信息',}
         }
       ]
     },
@@ -60,22 +61,22 @@ let router = new Router({
       title: '任务管理',
       name: 'TaskAdmin',
       component:layout,
-      iconCls: 'fa fa-user el-menu-icon',
-      meta: {requireAuth: true},
+      iconCls: 'fa fa-tasks fa-fw el-menu-icon',
+      meta: {requireAuth: true,title: '任务管理',},
       children:[
         {
           path: '/taskInfo',
           component: resolve => require(['../views/taskAdmin/taskList'],resolve),
           title:'任务列表',
           name: 'taskList',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true,title:'任务列表',}
         },
         {
           path: '/addTask',
           component: resolve => require(['../views/taskAdmin/addTask'],resolve),
           title:'添加任务',
           name:'addTask',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'添加任务',}
         },
         {
           path: '/taskDetail',
@@ -83,7 +84,7 @@ let router = new Router({
           title:'任务详情',
           name: 'taskDetail',
           hidden: true,
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'任务详情',}
         },
         {
           path: '/repaireTask',
@@ -91,7 +92,7 @@ let router = new Router({
           title:'修改任务',
           name: 'repaireTask',
           hidden: true,
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'修改任务',}
         },
       ]
     },
@@ -100,7 +101,7 @@ let router = new Router({
       title: '资源管理',
       name: 'ResourceAdmin',
       component: layout,
-      iconCls: 'fa fa-cubes el-menu-icon',
+      iconCls: 'fa fa-cubes fa-fw el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -108,14 +109,14 @@ let router = new Router({
           component: resolve => require(['../views/Resource/NumResource'],resolve),
           title:'数据资源',
           name: 'NumResource',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title: '资源管理',}
         },
         {
           path: '/ActiveResource',
           component: resolve => require(['../views/Resource/ActiveResource'],resolve),
           title:'活动资源',
           name: 'ActiveResource',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'活动资源',}
         }
       ]
     },
@@ -124,7 +125,7 @@ let router = new Router({
       title: '日志管理',
       name: 'LogAdmin',
       component: layout,
-      iconCls: 'fa fa-bookmark el-menu-icon',
+      iconCls: 'fa fa-bookmark fa-fw el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -132,14 +133,14 @@ let router = new Router({
           component: resolve => require(['../views/Log/Log'],resolve),
           title:'日志列表',
           name:'LogList',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title: '日志管理',}
         },
         {
           path: '/LogChart',
           component: resolve => require(['../views/Log/LogChart'],resolve),
           title:'日志图表',
           name:'LogChart',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'日志图表',}
         }
       ]
     },
@@ -148,7 +149,7 @@ let router = new Router({
       name: 'echarts',
       title: 'echarts图表',
       component:layout,
-      iconCls: 'fa fa-bar-chart el-menu-icon',
+      iconCls: 'fa fa-bar-chart fa-fw el-menu-icon',
       meta: {requireAuth: true},
       children:[
         {
@@ -156,63 +157,63 @@ let router = new Router({
           component: resolve => require(['../views/echarts/lesMiserables'],resolve),
           title:'lesMister',
           name:'lesMister',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title: 'echarts图表',}
         },
         {
           path: '/lineChart',
           component: resolve => require(['../views/echarts/lineChart'],resolve),
           title:'lineChart',
           name:'lineChart',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'lineChart',}
         },
         {
           path: '/forceGraphexpand',
           component: resolve => require(['../views/echarts/forceGraphexpand'],resolve),
           title:'forceGraphexpand',
           name:'forceGraphexpand',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'forceGraphexpand',}
         },
         {
           path: '/forceGraph',
           component: resolve => require(['../views/echarts/forceGraph'],resolve),
           title:'forceGraph',
           name:'forceGraph',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'forceGraph',}
         },
         {
           path: '/forcetocircle',
           component: resolve => require(['../views/echarts/forcetocircle'],resolve),
           title:'forcetocircle',
           name:'forcetocircle',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title:'forcetocircle',}
         },
         {
           path: '/forcealldata',
           component: resolve => require(['../views/echarts/forcealldata'],resolve),
           title:'forcealldata',
           name:'forcealldata',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true,title:'forcealldata',}
         },
         {
           path: '/closetoexpand',
           component: resolve => require(['../views/echarts/closetoexpand'],resolve),
           title:'closetoexpand',
           name:'closetoexpand',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true,title:'closetoexpand',}
         },
         {
           path: '/radialTree',
           component: resolve => require(['../views/echarts/radialTree'],resolve),
           title:'radialTree',
           name:'radialTree',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true,title:'radialTree',}
         },
         {
           path: '/Tree',
           component: resolve => require(['../views/echarts/Tree'],resolve),
           title: 'Tree',
           name:'Tree',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true, title: 'Tree',}
         }
       ]
     },
@@ -220,46 +221,74 @@ let router = new Router({
       path: 'D3',
       name: 'D3',
       title: 'D3图表',
-      component: resolve => require(['../views/Home'],resolve),
-      iconCls: 'fa fa-pie-chart el-menu-icon',
-      meta: {requireAuth: true},
+      component:layout,
+      iconCls: 'fa fa-pie-chart fa-fw el-menu-icon',
+      meta: {requireAuth: true,title: 'D3图表',},
       children:[
         {
           path: '/d3forceGraph',
           component: resolve => require(['../views/D3/forceGraph'],resolve),
           title:'d3forceGraph',
           name:'d3forceGraph',
-          meta: {requireAuth: true}
+          meta: {requireAuth: true,title:'d3forceGraph',}
         },
         {
           path: '/collapseTree',
           component: resolve => require(['../views/D3/CollapsibleTree'],resolve),
           name:'collapseTree',
-          meta: {requireAuth: true}
+          title:'collapseTree',
+          meta: {requireAuth: true, title:'collapseTree',}
         },
         {
           path: '/test',
           component: resolve => require(['../views/D3/test'],resolve),
           name:'test',
-          meta: {requireAuth: true}
+          title:'test',
+          meta: {requireAuth: true, title:'test'}
         }
       ]
     },
     {
-      path: 'form',
-      title: '表单',
-      name: 'form',
+      path: 'component',
+      title: '组件',
+      name: 'component',
       component: layout,
-      iconCls: 'fa fa-wpforms el-menu-icon',
-      meta: {requireAuth: true},
-      leaf: true,
+      iconCls: 'fa fa-wpforms fa-fw el-menu-icon',
+      meta: {requireAuth: true, title: '组件',},
       children:[
         {
-          path: '/form',
-          component: resolve => require(['../views/form/activityList'],resolve),
-          title:'活动表单',
-          name:'activityList',
-          meta: {requireAuth: true}
+          path: '/backToTop',
+          component: resolve => require(['../views/components/backToTop'],resolve),
+          title:'返回顶部',
+          name:'backToTop',
+          iconCls: 'fa fa-arrow-up',
+          meta: {requireAuth: true,  title:'返回顶部',}
+        },
+        {
+          path: '/uploader',
+          component: resolve => require(['../views/components/uploader'],resolve),
+          title:'上传',
+          name:'uploader',
+          iconCls: 'fa fa-cloud-upload',
+          meta: {requireAuth: true,  title:'上传',}
+        }
+      ]
+    },
+    {
+      path: 'table',
+      title: '操作表格',
+      name: 'table',
+      component: layout,
+      iconCls: 'fa fa-wpforms fa-fw el-menu-icon',
+      meta: {requireAuth: true, title: '组件',},
+      children:[
+        {
+          path: '/addTabHeader',
+          component: resolve => require(['../views/table/index'],resolve),
+          title:'动态表格',
+          name:'addTabHeader',
+          iconCls: 'fa fa-arrow-up',
+          meta: {requireAuth: true,  title:'动态表格',}
         }
       ]
     }

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+  const padding = 15
     export default {
         name: "index",
       data() {
@@ -16,13 +17,14 @@
       },
       methods: {
         handleScroll(e) {
-          const eventDelta = e.wheelDelta || -e.deltaY * 3
-          const $container = this.$refs.scrollContainer   /* dom */
-          const $containerWidth = $container.offsetWidth
+          console.log(e)
+          const eventDelta = e.wheelDelta || -e.deltaY * 3  /*鼠标滚动事件鼠标滚动的方向和幅度 wheelDelta:120倍数,正向上,负下 */
+          const $container = this.$refs.scrollContainer  /* dom */
+          const $containerWidth = $container.offsetWidth  /* dom宽度*/
           const $wrapper = this.$refs.scrollWrapper
           const $wrapperWidth = $wrapper.offsetWidth
 
-          if (eventDelta > 0) {
+          if (eventDelta > 0) { /*向上*/
             this.left = Math.min(0, this.left + eventDelta)
           } else {
             if ($containerWidth - padding < $wrapperWidth) {
@@ -57,6 +59,14 @@
     }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+  .scroll-container {
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+  .scroll-wrapper {
+    position: absolute;
+  }
+  }
 </style>

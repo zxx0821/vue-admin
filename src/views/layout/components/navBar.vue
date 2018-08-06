@@ -54,9 +54,7 @@ export default {
   methods: {
     /* 侧边栏的展开,收缩*/
     toggleSideBar () {
-      // console.log(this.sidebar)
       this.$store.dispatch('TOOGLE_SIDEBAR')
-      // console.log(this.sidebar)
     },
     /* 面包屑的展示*/
     getBreadcrumb () {

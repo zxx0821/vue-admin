@@ -6,6 +6,8 @@ import {forceGraph,schoolData,radialTree} from "./echarts/data/forceGraph";
 import {dataMap} from "./echarts/data/dataMap"
 import {d3relation} from "./D3/relation";
 import {taskList} from './data/task'
+import {staffInfo} from "./data/table";
+
 let data_json = json;
 let force_Graph = forceGraph;
 let school_Data = schoolData;
@@ -326,6 +328,28 @@ export default {
         }, 500);
       });
     });
+
+
+    /*员工信息*/
+    mock.onGet('/staff/listPage').reply(config => {
+      let {currentPage,username, pageSize} = config.params;
+      let mockUsers = staffInfo.filter(user => {
+        if (username && user.username.indexOf(username) < 0 ) {return false}
+        return true;
+      });
+      let total = mockUsers.length;
+      mockUsers = mockUsers.filter((u, index) => index < pageSize * currentPage && index >= pageSize * (currentPage - 1));
+      return new Promise((resolve, reject) => {
+        setTimeout(()=>{
+          resolve([200, {
+            total: total,
+            pageSize:pageSize,
+            staffInfo:mockUsers
+          }]);
+        },1000);
+      });
+    });
+
 
   }
 }

@@ -25,11 +25,9 @@ export default {
   mixins: [PcMobileRest],
   computed: {
     sidebar () {
-      console.log(this.$store.state.app.sidebar)
       return this.$store.state.app.sidebar
     },
     device () {
-      console.log(this.$store.state.app.device)
       return this.$store.state.app.device
     },
     classObj () {
@@ -38,11 +36,6 @@ export default {
         withoutAnimation: this.sidebar.withoutAnimation,
         mobile: this.device === 'mobile'
       }
-    }
-  },
-  watch: {
-    classObj () {
-      console.log(this.classObj);
     }
   },
   methods: {
