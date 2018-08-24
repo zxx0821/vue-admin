@@ -270,7 +270,15 @@ let router = new Router({
           title:'上传',
           name:'uploader',
           iconCls: 'fa fa-cloud-upload',
-          meta: {requireAuth: true,  title:'上传',}
+          meta: {requireAuth: true,  title:'上传'}
+        },
+        {
+          path: '/splite-page',
+          component: resolve => require(['../views/components/splite-page/splite-page'],resolve),
+          title:'分割页面',
+          name:'splite-page',
+          iconCls: 'fa fa-cloud-upload',
+          meta: {requireAuth: true,  title:'分割页面'}
         }
       ]
     },
@@ -291,6 +299,10 @@ let router = new Router({
           meta: {requireAuth: true,  title:'动态表格',}
         }
       ]
+    },
+    {
+      path: '*',
+      component: resolve => require(['../views/errorPage/err404'],resolve),
     }
 
   ]

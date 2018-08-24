@@ -6,7 +6,6 @@
       @open="handleOpen"
       @close="handleClose"
       @select="handleSelect"
-      unique-opened
       router
       :collapse="collapsed"
       background-color="#293c55"
